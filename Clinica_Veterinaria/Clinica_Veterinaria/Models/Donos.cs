@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Clinica_Veterinaria.Models
 {
@@ -16,12 +17,15 @@ namespace Clinica_Veterinaria.Models
 
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)] //O pk não será auto-increment
         public int DonoID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "{0} é de reenchimento obrigatorio")]
+        [Display(Name = "Nome do Dono")]
         public string Nome { set; get; }
 
-        [Required]
+        [Required(ErrorMessage = "{0} é de reenchimento obrigatorio")]
+        [Display(Name = "NIF do Dono")]
         public string NIF { get; set; }
 
         // especificar que um DONO tem muitos ANIMAIS
