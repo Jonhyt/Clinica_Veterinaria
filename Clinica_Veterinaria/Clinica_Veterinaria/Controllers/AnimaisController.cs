@@ -10,107 +10,112 @@ using Clinica_Veterinaria.Models;
 
 namespace Clinica_Veterinaria.Controllers
 {
-    public class DonosController : Controller
+    public class AnimaisController : Controller
     {
         private VetsDB db = new VetsDB();
 
-        // GET: Donos
+        // GET: Animais
         public ActionResult Index()
         {
-            return View(db.Donos.ToList().OrderBy(d=>d.Nome));
+            var animais = db.Animais.Include(a => a.Dono);
+            return View(animais.ToList());
         }
 
-        // GET: Donos/Details/5
+        // GET: Animais/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Donos donos = db.Donos.Find(id);
-            if (donos == null)
+            Animais animais = db.Animais.Find(id);
+            if (animais == null)
             {
                 return HttpNotFound();
             }
-            return View(donos);
+            return View(animais);
         }
 
-        // GET: Donos/Create
+        // GET: Animais/Create
         public ActionResult Create()
         {
+            ViewBag.DonosFK = new SelectList(db.Donos, "DonoID", "Nome");
             return View();
         }
 
-        // POST: Donos/Create
+        // POST: Animais/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DonoID,Nome,NIF")] Donos donos)
+        public ActionResult Create([Bind(Include = "AnimalID,Nome,Especie,Raca,Peso,Altura,DonosFK")] Animais animais)
         {
             if (ModelState.IsValid)
             {
-                db.Donos.Add(donos);
+                db.Animais.Add(animais);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(donos);
+            ViewBag.DonosFK = new SelectList(db.Donos, "DonoID", "Nome", animais.DonosFK);
+            return View(animais);
         }
 
-        // GET: Donos/Edit/5
+        // GET: Animais/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Donos donos = db.Donos.Find(id);
-            if (donos == null)
+            Animais animais = db.Animais.Find(id);
+            if (animais == null)
             {
                 return HttpNotFound();
             }
-            return View(donos);
+            ViewBag.DonosFK = new SelectList(db.Donos, "DonoID", "Nome", animais.DonosFK);
+            return View(animais);
         }
 
-        // POST: Donos/Edit/5
+        // POST: Animais/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DonoID,Nome,NIF")] Donos donos)
+        public ActionResult Edit([Bind(Include = "AnimalID,Nome,Especie,Raca,Peso,Altura,DonosFK")] Animais animais)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(donos).State = EntityState.Modified;
+                db.Entry(animais).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(donos);
+            ViewBag.DonosFK = new SelectList(db.Donos, "DonoID", "Nome", animais.DonosFK);
+            return View(animais);
         }
 
-        // GET: Donos/Delete/5
+        // GET: Animais/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Donos donos = db.Donos.Find(id);
-            if (donos == null)
+            Animais animais = db.Animais.Find(id);
+            if (animais == null)
             {
                 return HttpNotFound();
             }
-            return View(donos);
+            return View(animais);
         }
 
-        // POST: Donos/Delete/5
+        // POST: Animais/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Donos donos = db.Donos.Find(id);
-            db.Donos.Remove(donos);
+            Animais animais = db.Animais.Find(id);
+            db.Animais.Remove(animais);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
