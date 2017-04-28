@@ -151,6 +151,16 @@
     <Content Include="Views\Veterinarios\Details.cshtml" />
     <Content Include="Views\Veterinarios\Edit.cshtml" />
     <Content Include="Views\Veterinarios\Index.cshtml" />
+    <Content Include="Views\Animais\Create.cshtml" />
+    <Content Include="Views\Animais\Delete.cshtml" />
+    <Content Include="Views\Animais\Details.cshtml" />
+    <Content Include="Views\Animais\Edit.cshtml" />
+    <Content Include="Views\Animais\Index.cshtml" />
+    <Content Include="Views\Consultas\Create.cshtml" />
+    <Content Include="Views\Consultas\Delete.cshtml" />
+    <Content Include="Views\Consultas\Details.cshtml" />
+    <Content Include="Views\Consultas\Edit.cshtml" />
+    <Content Include="Views\Consultas\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
