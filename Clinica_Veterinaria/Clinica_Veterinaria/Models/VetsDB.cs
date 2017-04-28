@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Clinica_Veterinaria.Models
 {
@@ -12,6 +13,17 @@ namespace Clinica_Veterinaria.Models
 
         //especificar o local de criacao da BD
         public VetsDB() : base("LocalizacaoDaBD") { }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            // não podemos usar a chave seguinte, nesta geração de tabelas
+            // por causa das tabelas do Identity (gestão de utilizadores)
+            // modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+
+            base.OnModelCreating(modelBuilder);
+        }
 
     }
 }

@@ -1,12 +1,13 @@
 ﻿@model Clinica_Veterinaria.Models.Donos
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Apagar dados dos donos";
 }
 
-<h2>Delete</h2>
+<h2>Apagar Dados</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Quer mesmo apagar este dono?</h3>
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 <div>
     <h4>Donos</h4>
     <hr />
@@ -34,7 +35,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Página Inicial", "Index")
         </div>
     }
 </div>

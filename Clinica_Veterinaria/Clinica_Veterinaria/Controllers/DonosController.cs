@@ -27,12 +27,12 @@ namespace Clinica_Veterinaria.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Donos donos = db.Donos.Find(id);
-            if (donos == null)
+            Donos dono = db.Donos.Find(id);
+            if (dono == null)
             {
                 return HttpNotFound();
             }
-            return View(donos);
+            return View(dono);
         }
 
         // GET: Donos/Create
@@ -94,14 +94,14 @@ namespace Clinica_Veterinaria.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
-            Donos donos = db.Donos.Find(id);
-            if (donos == null)
+            Donos dono = db.Donos.Find(id);
+            if (dono == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
-            return View(donos);
+            return View(dono);
         }
 
         // POST: Donos/Delete/5
@@ -109,10 +109,21 @@ namespace Clinica_Veterinaria.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Donos donos = db.Donos.Find(id);
-            db.Donos.Remove(donos);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            //procura o Dono de id "id" na base de dados
+            Donos dono = db.Donos.Find(id);
+            try
+            {
+                //remove o resisto encontrado em cima
+                db.Donos.Remove(dono);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                //cria uma mensagem de erro a ser apresentada ao utilizador
+                ModelState.AddModelError("",string.Format("ocorreu um erro na eliminação do Dono com ID={0} - {1}",id,dono.Nome));
+                return View(dono);
+            }
         }
 
         protected override void Dispose(bool disposing)
