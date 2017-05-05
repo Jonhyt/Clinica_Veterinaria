@@ -48,11 +48,43 @@ namespace Clinica_Veterinaria.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "DonoID,Nome,NIF")] Donos donos)
         {
-            if (ModelState.IsValid)
+            //determinar o ID do novo Dono
+            int novoID = 0;
+            try
             {
-                db.Donos.Add(donos);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                novoID = db.Donos.Max(d => d.DonoID) + 1;
+            }
+            catch (Exception)
+            {
+                novoID = 1;
+            }
+            //outra forma
+            //novoID = db.Donos.Last().DonoID + 1;
+
+            //atribuir o novo ID ao respectivo dono
+            donos.DonoID = novoID;
+            try
+            {
+                if (ModelState.IsValid) //verificar e os dados são consistentes com a BD
+                {
+                    db.Donos.Add(donos);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Ocorreu um erro na operação de guardar um novo dono");
+                throw;
+                /*adicionar a uma classe ERRO
+                 * -id
+                 * -timestamp
+                 * -operação que gerou o erro
+                 * -mensagem e erro
+                 * -qual o User que gerou o erro
+                 * -enviar um email ao utilizador 'Admin' a avisar da ocorrencia do erro
+                 * -E.T.C.
+                 */
             }
 
             return View(donos);
