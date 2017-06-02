@@ -33,5 +33,8 @@ namespace Clinica_Veterinaria.Models
         // especificar que um DONO tem muitos ANIMAIS
         public ICollection<Animais> ListaDeAnimais { get; set; }
 
+        // Ligar um Dono a uma conta
+        public string UserName { get; set; }
+        
     }
 }

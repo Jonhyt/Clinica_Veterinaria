@@ -10,14 +10,19 @@ using Clinica_Veterinaria.Models;
 
 namespace Clinica_Veterinaria.Controllers
 {
+    [Authorize]
     public class DonosController : Controller
     {
         private VetsDB db = new VetsDB();
 
+        //[AllowAnonymous]
         // GET: Donos
         public ActionResult Index()
         {
-            return View(db.Donos.ToList().OrderBy(d=>d.Nome));
+            if(User.IsInRole("Veterinario") || User.IsInRole("Funcionario"))
+                return View(db.Donos.ToList().OrderBy(d=>d.Nome));
+
+            return View(db.Donos.Where(d => d.UserName.Equals(User.Identity.Name)).ToList());
         }
 
         // GET: Donos/Details/5

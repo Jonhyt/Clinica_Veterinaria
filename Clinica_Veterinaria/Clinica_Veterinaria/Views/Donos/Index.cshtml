@@ -7,7 +7,10 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Novo Dono", "Create")
+    @if (User.IsInRole("Funcionario"))
+    {
+        Html.ActionLink("Novo Dono", "Create");
+    }
 </p>
 <table class="table">
     <tr>
@@ -28,11 +31,15 @@
         <td>
             @Html.DisplayFor(modelItem => item.NIF)
         </td>
+        @if (User.IsInRole("Funcionario"))
+        {
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.DonoID }) |
-            @Html.ActionLink("Detalhes", "Details", new { id=item.DonoID }) |
-            @Html.ActionLink("Apagar", "Delete", new { id=item.DonoID })
+
+            @Html.ActionLink("Editar", "Edit", new { id = item.DonoID }) |
+            @Html.ActionLink("Detalhes", "Details", new { id = item.DonoID }) |
+            @Html.ActionLink("Apagar", "Delete", new { id = item.DonoID })
         </td>
+        }
     </tr>
 }
 
