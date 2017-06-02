@@ -33,6 +33,10 @@ namespace Clinica_Veterinaria.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Donos dono = db.Donos.Find(id);
+            //criar um obj do tipo ICollection
+            //e associar esse obj ao 'Dono'
+            //...........fazer código..........
+
             if (dono == null)
             {
                 return HttpNotFound();

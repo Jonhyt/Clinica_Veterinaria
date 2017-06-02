@@ -28,6 +28,23 @@
 
     </dl>
 </div>
+<div>
+    <table class="table">
+        <tr>
+            <th>Nome</th>
+            <th>Raça</th>
+        </tr>
+            @{ 
+                foreach(var animal in Model.ListaDeAnimais)
+                {
+                    <tr>
+                        <td>@animal.Nome</td>
+                        <td>@animal.Raca</td>
+                    </tr>
+                }
+            }
+    </table>
+</div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.DonoID }) |
     @Html.ActionLink("Back to List", "Index")

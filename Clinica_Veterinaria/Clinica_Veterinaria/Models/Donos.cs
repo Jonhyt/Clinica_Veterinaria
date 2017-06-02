@@ -31,7 +31,7 @@ namespace Clinica_Veterinaria.Models
         public string NIF { get; set; }
 
         // especificar que um DONO tem muitos ANIMAIS
-        public ICollection<Animais> ListaDeAnimais { get; set; }
+        public virtual ICollection<Animais> ListaDeAnimais { get; set; }
 
         // Ligar um Dono a uma conta
         public string UserName { get; set; }
